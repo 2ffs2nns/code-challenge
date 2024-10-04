@@ -92,7 +92,7 @@ def print_usage():
         --var_file=<path_to_var_file> --gcloud_env=<gcloud_env>
         --project_name=<project_name> [--working_dir=<working_directory>]
 
-        Available actions: init, apply, plan, destroy
+        Available actions: init, plan, apply, destroy
         With the init action, the combination of <gcloud_env> and <project_name> set 
         the GCS backend_config. ie
         terraform init -backend-config='prefix=terraform/<gcloud_env>/<project_name>/'
@@ -131,16 +131,7 @@ if __name__ == "__main__":
             sys.exit(1)
 
         tf = Terraform(working_dir=working_dir)
-        if action == "init":
-            logger.info(f"Running terraform {action}...")
-            run_terraform_command(tf, action, var_file, gcloud_env, project_name)
-        elif action == "apply":
-            logger.info(f"Running terraform {action}...")
-            run_terraform_command(tf, action, var_file, gcloud_env, project_name)
-        elif action == "plan":
-            logger.info(f"Running terraform {action}...")
-            run_terraform_command(tf, action, var_file, gcloud_env, project_name)
-        elif action == "destroy":
+        if action in ["init", "plan", "apply", "destroy"]:
             logger.info(f"Running terraform {action}...")
             run_terraform_command(tf, action, var_file, gcloud_env, project_name)
         else:
