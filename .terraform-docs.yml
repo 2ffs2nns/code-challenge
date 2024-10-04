@@ -7,7 +7,7 @@ output:
     <!-- END_TF_DOCS -->
 
 content: |-
-  # Terraform
+  ## Terraform
 
   {{ .Providers }}
 

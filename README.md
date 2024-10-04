@@ -64,8 +64,32 @@ python wrapper.py apply --var_file=development.tfvars --gcloud_env=development -
 
 Git-actions are setup to run against all pull-requests covering `tflint`, `tf-fmt`, `checkov` and `bandit`. Checkov and Bandit are SAST security tools for Terraform and Python. There is also a `pre-commit` hook setup to auto-generate Terraform docs using `terraform-docs`. Although it is not automated with a hook or action, I also used `inkdrop` to visualize a diagram of this project/configuration.
 
+## Questions
+
+Q: How would you handle errors and exceptions in your Terraform script and Python wrapper script?
+
+A: I added exception blocks as appropriate and switched the logging from `info` to `error`.
+
+Q: What are the benefits of using a remote state backend?
+
+A: Multiple team members can work on the project w/out having to copy/move the tfstate around manually. Also, with versioning and locking support there is builtin protection and redundancy.
+
+Q: How would you implement a continuous integration and continuous delivery (CI/CD) pipeline for your Terraform script and Python wrapper script?
+
+A: git-actions are a straight forward way to implement CI/CD for Terraform. Managing secrets for actions can get tricky, depending on the workload.
+
+Also, if the dependencies or requirements of the project start to become unwieldy, it might be better to move to a CI/CD platform like AWS CodeBuild, Jenkins, CircleCI etc. Considerations should be made around bundling a deploy script that needs update/maintenance. With a micro-services architecture it might be better to put the deployment tooling/python script in it's own repo, then have N+ Terraform repos consume it. It could also become it's own git-action as well.
+
+Q: What are some security considerations when using Terraform to manage cloud infrastructure?
+
+A: The statefile can contain secrets in the clear. It needs to be locked down, and should have cloud native encryption enabled. ie KMS keys. Another consideration would be denial-of-service, if termination and delete protection is not thought out and enabled for production workloads. Terraform and automation make it easy to accidentially delete production resources.
+
+Q: How would you configure Kubernetes Ingress to expose applications running on the GKE cluster?
+
+A: I would setup a "gce" annotation and add rules to specific services.
+
 <!-- BEGIN_TF_DOCS -->
-# Terraform
+## Terraform
 
 ## Providers
 

@@ -12,9 +12,6 @@ resource "google_container_cluster" "primary" {
 
   monitoring_service = "monitoring.googleapis.com/kubernetes"
   logging_service    = "logging.googleapis.com/kubernetes"
-  logging_config {
-    enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
-  }
 
   network    = google_compute_network.vpc.name
   subnetwork = google_compute_subnetwork.subnet.name
